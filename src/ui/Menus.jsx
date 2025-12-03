@@ -1,6 +1,10 @@
+import { createContext, useContext, useState } from "react";
+import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
 
-const StyledMenu = styled.div`
+const Menu = styled.div`
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -26,14 +30,15 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: fixed;
+  position: absolute;
+  z-index: 1;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: -0.8rem;
+  top: 4rem;
 `;
 
 const StyledButton = styled.button`
@@ -60,3 +65,66 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
+
+const MenuContext = createContext();
+
+function Menus({ children }) {
+  const [openId, setOpenId] = useState("");
+  const [position, setPosition] = useState(null);
+
+  const close = () => setOpenId("");
+  const open = setOpenId;
+
+  return (
+    <MenuContext.Provider
+      value={{ openId, close, open, position, setPosition }}>
+      {children}
+    </MenuContext.Provider>
+  );
+}
+
+function Toggle({ id }) {
+  const { openId, open, close, setPosition } = useContext(MenuContext);
+
+  function handleClick(e) {
+    openId === "" || openId !== id ? open(id) : close();
+    const rect = e.target.closest("button").getBoundingClientRect();
+
+    setPosition({
+      x: window.innerWidth - rect.left - rect.width,
+      y: rect.top + rect.height + 8,
+    });
+  }
+
+  return (
+    <StyledToggle onClick={handleClick}>
+      <HiEllipsisVertical />
+    </StyledToggle>
+  );
+}
+
+function List({ children, id }) {
+  const { openId, position } = useContext(MenuContext);
+
+  if (openId !== id) return null;
+
+  return <StyledList position={position}>{children}</StyledList>;
+}
+
+function Button({ children, icon }) {
+  return (
+    <li>
+      <StyledButton>
+        {icon}
+        {children}
+      </StyledButton>
+    </li>
+  );
+}
+
+Menus.Menu = Menu;
+Menus.Toggle = Toggle;
+Menus.List = List;
+Menus.Button = Button;
+
+export default Menus;
