@@ -70,30 +70,22 @@ const MenuContext = createContext();
 
 function Menus({ children }) {
   const [openId, setOpenId] = useState("");
-  const [position, setPosition] = useState(null);
 
   const close = () => setOpenId("");
   const open = setOpenId;
 
   return (
-    <MenuContext.Provider
-      value={{ openId, close, open, position, setPosition }}>
+    <MenuContext.Provider value={{ openId, close, open }}>
       {children}
     </MenuContext.Provider>
   );
 }
 
 function Toggle({ id }) {
-  const { openId, open, close, setPosition } = useContext(MenuContext);
+  const { openId, open, close } = useContext(MenuContext);
 
-  function handleClick(e) {
+  function handleClick() {
     openId === "" || openId !== id ? open(id) : close();
-    const rect = e.target.closest("button").getBoundingClientRect();
-
-    setPosition({
-      x: window.innerWidth - rect.left - rect.width,
-      y: rect.top + rect.height + 8,
-    });
   }
 
   return (
@@ -104,11 +96,11 @@ function Toggle({ id }) {
 }
 
 function List({ children, id }) {
-  const { openId, position } = useContext(MenuContext);
+  const { openId } = useContext(MenuContext);
 
   if (openId !== id) return null;
 
-  return <StyledList position={position}>{children}</StyledList>;
+  return <StyledList>{children}</StyledList>;
 }
 
 function Button({ children, icon }) {
