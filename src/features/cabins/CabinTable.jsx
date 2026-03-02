@@ -4,30 +4,36 @@ import { useCabins } from "./useCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 function CabinTable() {
   const { isLoading, cabins } = useCabins();
   const [searchParams] = useSearchParams();
-  
+
   if (isLoading) return <Spinner />;
-  
+
+  if (!cabins?.length) return <Empty resourceName="cabins" />;
+
   let filteredCabins;
   // 1) Filter
-  const filterValue = searchParams.get("discount") || 'all';
+  const filterValue = searchParams.get("discount") || "all";
 
-  if(filterValue === 'all') filteredCabins = cabins
-  if(filterValue === 'with-discount') filteredCabins = cabins.filter(cabin => cabin?.discount)
-  if(filterValue === 'no-discount') filteredCabins = cabins.filter(cabin => !cabin?.discount)
+  if (filterValue === "all") filteredCabins = cabins;
+  if (filterValue === "with-discount")
+    filteredCabins = cabins.filter((cabin) => cabin?.discount);
+  if (filterValue === "no-discount")
+    filteredCabins = cabins.filter((cabin) => !cabin?.discount);
 
   // 2) Sort
-  const sortByValue = searchParams.get("sortBy") || 'name-asc';
+  const sortByValue = searchParams.get("sortBy") || "name-asc";
 
-  const [field,direction] = sortByValue.split('-')
-  const modifier = direction === 'asc' ? 1 : -1;
-  filteredCabins.sort((a,b) => {
-    if(typeof a[field] === 'string') return a[field].localeCompare(b[field]) * modifier
-    return (a[field] - b[field]) * modifier
-  })
+  const [field, direction] = sortByValue.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  filteredCabins.sort((a, b) => {
+    if (typeof a[field] === "string")
+      return a[field].localeCompare(b[field]) * modifier;
+    return (a[field] - b[field]) * modifier;
+  });
 
   return (
     <Menus>

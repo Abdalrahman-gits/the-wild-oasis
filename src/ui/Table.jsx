@@ -34,6 +34,11 @@ const StyledRow = styled(CommonRow)`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
+
+  & > div {
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
 `;
 
 const StyledBody = styled.section`
