@@ -9,6 +9,8 @@ const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  overflow: visible !important;
 `;
 
 const StyledToggle = styled.button`
@@ -44,6 +46,7 @@ const StyledList = styled.ul`
 
 const StyledButton = styled.button`
   width: 100%;
+  min-width: max-content;
   text-align: left;
   background: none;
   border: none;
