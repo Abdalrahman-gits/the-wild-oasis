@@ -57,6 +57,10 @@ const PaginationButton = styled.button`
     background-color: var(--color-brand-600);
     color: var(--color-brand-50);
   }
+
+  &:disabled {
+    color: var(--color-grey-400);
+  }
 `;
 
 function Pagination({ count }) {
@@ -95,8 +99,7 @@ function Pagination({ count }) {
         </PaginationButton>
         <PaginationButton
           onClick={nextPage}
-          disabled={currentPage === pageCount}
-          active={currentPage === pageCount}>
+          disabled={currentPage === pageCount}>
           Next <HiChevronRight />
         </PaginationButton>
       </Buttons>
