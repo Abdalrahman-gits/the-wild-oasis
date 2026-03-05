@@ -12,13 +12,12 @@ async function getCabins() {
 }
 
 async function addEditCabin(cabinObj, id) {
-  console.log(cabinObj, id);
   // https://cmoxpfjkkshjglabxetr.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
   const hasImagePath = cabinObj.image.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${cabinObj.image.name}`.replaceAll(
     "/",
-    ""
+    "",
   );
 
   const imagePath = hasImagePath

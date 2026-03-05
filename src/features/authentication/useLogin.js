@@ -9,8 +9,14 @@ function useLogin() {
 
   const { mutate: login, isPending: isLogging } = useMutation({
     mutationFn: loginApi,
-    onSuccess: () => {
-      toast.success("Welcome back");
+    onSuccess: ({
+      user: {
+        user_metadata: { fullName },
+      },
+    }) => {
+      toast.success(
+        `Welcome back${fullName?.split(" ")[0] ? `, ${fullName?.split(" ")[0]}` : ""} 👋`,
+      );
       queryClient.invalidateQueries({
         queryKey: ["user"],
       });
