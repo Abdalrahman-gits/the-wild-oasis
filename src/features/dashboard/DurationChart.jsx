@@ -1,4 +1,13 @@
+import {
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Sector,
+  Tooltip,
+} from "recharts";
 import styled from "styled-components";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const ChartBox = styled.div`
   /* Box */
@@ -94,7 +103,7 @@ const startDataDark = [
   },
   {
     duration: "15-21 nights",
-    value: 0,
+    value: 5,
     color: "#1d4ed8",
   },
   {
@@ -109,7 +118,7 @@ function prepareData(startData, stays) {
 
   function incArrayValue(arr, field) {
     return arr.map((obj) =>
-      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
+      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj,
     );
   }
 
@@ -130,3 +139,47 @@ function prepareData(startData, stays) {
 
   return data;
 }
+
+function DurationChart({ confirmedStays }) {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays).map((item) => ({
+    ...item,
+    fill: item.color,
+  }));
+
+  return (
+    <ChartBox>
+      <ResponsiveContainer width="100%" height={240}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="duration"
+            innerRadius={85}
+            outerRadius={110}
+            cx="40%"
+            cy="50%"
+            paddingAngle={3}
+            shape={(props) => (
+              <Sector {...props} fill={data[props.index]?.color} />
+            )}
+          />
+          <Tooltip />
+          <Legend
+            verticalAlign="middle"
+            align="right"
+            width="30%"
+            layout="vertical"
+            iconSize={15}
+            iconType="circle"
+            // Prevent automatic sorting, as Legent sorts based on nameKey
+            itemSorter={null}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
+}
+
+export default DurationChart;
