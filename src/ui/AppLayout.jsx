@@ -25,6 +25,13 @@ const Main = styled.main`
   background-color: var(--color-grey-50);
 
   overflow: auto;
+
+  overflow: -moz-hidden-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 function AppLayout() {
