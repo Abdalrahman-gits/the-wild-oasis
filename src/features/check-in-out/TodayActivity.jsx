@@ -16,8 +16,12 @@ const StyledToday = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
-  grid-column: 1 / span 2;
+  grid-column: 1 / -1;
   padding-top: 2.4rem;
+
+  @media (min-width: 1200px) {
+    grid-column: 1 / span 2;
+  }
 `;
 
 function TodayActivity() {
