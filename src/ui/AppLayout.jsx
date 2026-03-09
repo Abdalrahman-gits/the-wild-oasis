@@ -1,14 +1,19 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-import Sidebar from "./Sidebar";
 import styled from "styled-components";
+import DesktopSidebar from "./DesktopSidebar";
+import MobileSidebar from "./MobileSidebar";
 
 const StyledAppLayout = styled.div`
   display: grid;
-  grid-template-columns: 26rem 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
 
   height: 100dvh;
+
+  @media (min-width: 991px) {
+    grid-template-columns: 26rem 1fr;
+  }
 `;
 
 const Container = styled.div`
@@ -38,7 +43,8 @@ function AppLayout() {
   return (
     <StyledAppLayout>
       <Header />
-      <Sidebar />
+      <DesktopSidebar />
+      <MobileSidebar />
 
       <Main>
         <Container>
