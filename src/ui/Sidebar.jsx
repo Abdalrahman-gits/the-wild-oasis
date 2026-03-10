@@ -7,7 +7,6 @@ const StyledAside = styled.aside`
   border-right: 1px solid var(--color-grey-100);
   background-color: var(--color-grey-0);
 
-  grid-area: 1 / 1 / -1 / 2;
   display: flex;
   flex-direction: column;
   gap: 3.2rem;

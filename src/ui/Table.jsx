@@ -1,12 +1,30 @@
 import { createContext, useContext } from "react";
 import styled from "styled-components";
 
+const TableContainer = styled.div`
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-grey-200);
+  }
+`;
+
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
 
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
+
+  /* width: 100% makes it fill the container on large screens */
+  /* min-width: max-content makes sure the border always wraps the content, even when it overflows the container on small screens */
+  width: 100%;
+  min-width: max-content;
 `;
 
 const CommonRow = styled.div`
@@ -26,6 +44,24 @@ const StyledHeader = styled(CommonRow)`
   letter-spacing: 0.4px;
   font-weight: 600;
   color: var(--color-grey-600);
+
+  & > *:first-child,
+  & > *:nth-child(2) {
+    position: sticky;
+    top: 0;
+    height: 100%;
+    background-color: var(--color-grey-50);
+  }
+
+  & > *:first-child {
+    left: 0px;
+    padding-left: 1rem;
+    z-index: 1;
+  }
+  & > *:nth-child(2) {
+    left: 46px;
+    padding-left: 2rem;
+  }
 `;
 
 const StyledRow = styled(CommonRow)`
@@ -35,9 +71,25 @@ const StyledRow = styled(CommonRow)`
     border-bottom: 1px solid var(--color-grey-100);
   }
 
-  & > div {
+  & > * {
     overflow: hidden;
     overflow-wrap: break-word;
+  }
+
+  & > *:first-child,
+  & > *:nth-child(2) {
+    position: sticky;
+    height: 100%;
+    background-color: var(--color-grey-0);
+  }
+  & > *:first-child {
+    left: 0px;
+    padding-left: 1rem;
+    z-index: 1;
+  }
+  & > *:nth-child(2) {
+    left: 46px;
+    padding-left: 2rem;
   }
 `;
 
@@ -69,7 +121,9 @@ const TableContext = createContext();
 function Table({ children, columns }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable role="table">{children}</StyledTable>
+      <TableContainer>
+        <StyledTable role="table">{children}</StyledTable>
+      </TableContainer>
     </TableContext.Provider>
   );
 }

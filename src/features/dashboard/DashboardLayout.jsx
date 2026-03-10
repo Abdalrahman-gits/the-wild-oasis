@@ -10,9 +10,14 @@ import TodayActivity from "../check-in-out/TodayActivity";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto 34rem auto;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
   gap: 2.4rem;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 34rem auto;
+  }
 `;
 
 function DashboardLayout() {
