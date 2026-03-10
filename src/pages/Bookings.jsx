@@ -1,15 +1,15 @@
 import BookingTable from "../features/bookings/BookingTable";
 import Heading from "../ui/Heading";
-import Row from "../ui/Row";
 import BookingTableOperations from "../features/bookings/BookingTableOperations";
+import PageHeader from "../ui/PageHeader";
 
 function Bookings() {
   return (
     <>
-      <Row type="horizontal">
+      <PageHeader>
         <Heading as="h1">All bookings</Heading>
         <BookingTableOperations />
-      </Row>
+      </PageHeader>
       <BookingTable />
     </>
   );

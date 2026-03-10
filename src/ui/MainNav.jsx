@@ -6,6 +6,7 @@ import {
 } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useSidebar } from "../context/SidebarContext";
 
 const NavList = styled.ul`
   display: flex;
@@ -53,35 +54,37 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
+  const { close } = useSidebar();
+
   return (
     <NavList>
       <li>
-        <StyledNavLink to="/dashboard">
+        <StyledNavLink to="/dashboard" onClick={close}>
           <HiOutlineHome />
           <span>Home</span>
         </StyledNavLink>
       </li>
 
       <li>
-        <StyledNavLink to="/bookings">
+        <StyledNavLink to="/bookings" onClick={close}>
           <HiOutlineCalendarDays />
           <span>Bookings</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to="/cabins">
+        <StyledNavLink to="/cabins" onClick={close}>
           <HiOutlineHomeModern />
           <span>Cabins</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to="/users">
+        <StyledNavLink to="/users" onClick={close}>
           <HiOutlineUsers />
           <span>Users</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to="/settings">
+        <StyledNavLink to="/settings" onClick={close}>
           <HiOutlineCog6Tooth />
           <span>Settings</span>
         </StyledNavLink>
